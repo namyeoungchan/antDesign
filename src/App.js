@@ -1,11 +1,18 @@
 import { React } from "react";
-import { Button, Tooltip } from "antd";
-import { FilterOutlined } from "@ant-design/icons"
+import { BrowserRouter as Switch , Routes, Route } from 'react-router-dom';
+import './App.css'
+import LoginPage from "./components/LoginPage.js";
+import MainPage from "./components/MainPage";
 
 export default function App() {
+
     return (
-        <div className="App">
-           
-        </div>
+            <Switch>
+              <Routes>
+              <Route path="/Login" element={<LoginPage />} />
+              <Route path="/Main" element={<MainPage />} />
+              <Route component={<LoginPage/>}/>
+              </Routes>
+               </Switch>
     );
 }
