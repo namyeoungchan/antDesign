@@ -5,10 +5,13 @@ const comFetch = (url,parameter)=>{
     console.log(authCookie);
     console.log('Authorization:', `Bearer ${authCookie}`);
     if(parameter.method==='POST'){
+
      return fetch( url,{
         method: method,
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+          
            'Authorization': `Bearer ${authCookie}`
         },
         body: data,
@@ -24,9 +27,9 @@ const comFetch = (url,parameter)=>{
           // 에러 처리
         });
     }else if(parameter.method==='GET'){
-    
          return fetch( url,{
             method: method,
+            credentials: 'include',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${authCookie}`

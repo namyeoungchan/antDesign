@@ -9,16 +9,19 @@ const headerMenu = ['회원관리', '상품관리'].map((key) => ({
 }));
 
 const App = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     // useEffect(() => {
     //     let parameter = {"method":"GET"}
     //     commonFetch("http://localhost:8080/chkSession", parameter).then(result => {
     //       // result 값 처리
     //       console.log(result.message);
-    //     //   if(result.message==="Access Denied"){
-    //     //     alert("로그인이 필요합니다.")
-    //     //     navigate('/Login');
-    //     //   }
+    //       if(result.message==="Access Denied"){
+    //         alert("로그인이 필요합니다.")
+    //         // navigate('/Login');
+    //       }else{
+    //         alert("result::::::"+result);
+    //         return;
+    //       } 
     
     //     })
     //     .catch(error => {
