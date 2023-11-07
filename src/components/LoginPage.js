@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import commonFetch from '../comLib/CommonFetch.js';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginInfo } from '../reducers/login';
 
 function LoginPage() {
   const [mode, setMode] = useState('Login');
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const onFinish = async (values) => {
     const endpoint = mode === 'Login' ? 'loginUser' : 'signIn';
     const parameter = { method: 'POST', body: values };
@@ -14,10 +16,19 @@ function LoginPage() {
     commonFetch(`http://localhost:8080/${endpoint}`, parameter)
       .then((result) => {
         if (result.code === '200') {
+          console.log(loginInfo);
+          console.log(values.username);
+          dispatch(
+            loginInfo.actions.login({
+              loginId: values.username,
+              loginIp: 'your_login_ip_here',
+            }),
+          );
           localStorage.setItem('authCookie', result.sessionId);
           localStorage.setItem('SESSION_ID', result.sessionId);
-          alert('로그인되었습니다.');
+
           navigate('/main');
+          alert('로그인되었습니다.');
         } else {
           alert(result.message);
         }

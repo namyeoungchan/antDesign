@@ -16,8 +16,7 @@ const App = () => {
     const parameter = { method: 'GET' };
     commonFetch(`http://localhost:8080/logout`, parameter)
       .then((result) => {
-        // App.setIsLoggedIn(false);
-        navigate('/main');
+        navigate('/login');
         alert('로그아웃 되었습니다..');
       })
       .catch((error) => {

@@ -1,49 +1,65 @@
 const comFetch = (url, parameter) => {
-  console.log(url);
-  console.log(parameter);
   const authCookie = localStorage.getItem('authCookie');
   const data = JSON.stringify(parameter.body ? parameter.body : null);
   const method = parameter.method;
-  if (parameter.method === 'POST') {
-    return fetch(url, {
-      method: method,
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
+  switch (method) {
+    case 'POST':
+      return fetch(url, {
+        method: method,
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'http://localhost:8080',
+          Authorization: `Bearer ${authCookie}`,
+        },
+        body: data,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          throw error;
+          // 에러 처리
+        });
+    case 'GET':
+      return fetch(url, {
+        method: method,
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'http://localhost:8080',
+          Authorization: `Bearer ${authCookie}`,
+        },
+      })
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          throw error;
+          // 에러 처리
+        });
 
-        Authorization: `Bearer ${authCookie}`,
-      },
-      body: data,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        return data;
+    case 'CUSTOM':
+      return fetch(url, {
+        method: method,
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'http://localhost:8080',
+          Authorization: `Bearer ${authCookie}`,
+        },
       })
-      .catch((error) => {
-        console.log('에러발생');
-        console.log(error);
-        throw error;
-        // 에러 처리
-      });
-  } else if (parameter.method === 'GET') {
-    return fetch(url, {
-      method: method,
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${authCookie}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        return data;
-      })
-      .catch((error) => {
-        console.log('에러발생');
-        console.log(error);
-        throw error;
-        // 에러 처리
-      });
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          throw error;
+          // 에러 처리
+        });
   }
 };
 
