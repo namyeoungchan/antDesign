@@ -3,7 +3,8 @@ import { Button, Form, Input } from 'antd';
 import commonFetch from '../comLib/CommonFetch.js';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loginInfo } from '../reducers/login';
+import { LOGININFO_LOGIN } from '../reducers/login';
+import store from '../store';
 
 function LoginPage() {
   const [mode, setMode] = useState('Login');
@@ -16,18 +17,16 @@ function LoginPage() {
     commonFetch(`http://localhost:8080/${endpoint}`, parameter)
       .then((result) => {
         if (result.code === '200') {
-          console.log(loginInfo);
-          console.log(values.username);
-          dispatch(
-            loginInfo.actions.login({
+          dispatch({
+            type: 'LOGININFO_LOGIN',
+            data: {
               loginId: values.username,
-              loginIp: 'your_login_ip_here',
-            }),
-          );
+            },
+          });
           localStorage.setItem('authCookie', result.sessionId);
           localStorage.setItem('SESSION_ID', result.sessionId);
-
-          navigate('/main');
+          console.log(store.getState());
+          navigate('/Main');
           alert('로그인되었습니다.');
         } else {
           alert(result.message);

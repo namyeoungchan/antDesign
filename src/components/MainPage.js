@@ -1,23 +1,17 @@
-<<<<<<< HEAD
-import React, { useEffect } from "react";
-import { Layout, Menu, theme } from "antd";
-import { useNavigate } from "react-router-dom";
-import commonFetch from "../comLib/CommonFetch";
-=======
-import React from 'react';
 import { Layout, Menu, theme } from 'antd';
-import commonFetch from '../comLib/CommonFetch';
 import { useNavigate } from 'react-router-dom';
->>>>>>> dd2b4f3bdd4fc87d5111f0b2747dcd7b435433c6
+import React from 'react';
+import commonFetch from '../comLib/CommonFetch';
 
 const { Header, Content, Footer } = Layout;
-const headerMenu = ["회원관리", "상품관리"].map((key) => ({
+const headerMenu = ['회원관리', '상품관리'].map((key) => ({
   key,
   label: ` ${key}`,
 }));
 
 const App = () => {
   const navigate = useNavigate();
+  console.log('됐음');
   const Logout = async () => {
     navigate('/login');
     const parameter = { method: 'GET' };
@@ -37,8 +31,8 @@ const App = () => {
     <Layout>
       <Header
         style={{
-          display: "flex",
-          alignItems: "center",
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         <div className="demo-logo" />
@@ -51,18 +45,18 @@ const App = () => {
       </Header>
       <Content
         style={{
-          padding: "0 50px",
+          padding: '0 50px',
         }}
       >
         <Layout
           style={{
-            padding: "24px 0",
+            padding: '24px 0',
             background: colorBgContainer,
           }}
         >
           <Content
             style={{
-              padding: "0 24px",
+              padding: '0 24px',
               minHeight: 280,
             }}
           ></Content>
@@ -71,7 +65,7 @@ const App = () => {
       </Content>
       <Footer
         style={{
-          textAlign: "center",
+          textAlign: 'center',
         }}
       >
         Ant Design ©2023 Created by Ant UED
