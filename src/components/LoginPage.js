@@ -20,7 +20,7 @@ function LoginPage() {
           dispatch({
             type: 'LOGININFO_LOGIN',
             data: {
-              loginId: values.username,
+              loginId: values.loginId,
             },
           });
           localStorage.setItem('authCookie', result.sessionId);
@@ -64,8 +64,8 @@ function LoginPage() {
         }}
       >
         <Form.Item
-          label="username"
-          name="username"
+          label="loginId"
+          name="loginId"
           rules={[
             {
               required: true,
@@ -77,8 +77,8 @@ function LoginPage() {
         </Form.Item>
 
         <Form.Item
-          label="Password"
-          name="password"
+          label="pw"
+          name="pw"
           rules={[
             {
               required: true,
