@@ -22,7 +22,8 @@ export default function App() {
           method: 'GET',
         });
         if (response.status === 200) {
-          setIsLoggedIn(true);
+          const jsonData = await response.json();
+          if (jsonData.code === '01') setIsLoggedIn(true);
         } else {
           setIsLoggedIn(false);
         }
@@ -47,7 +48,7 @@ export default function App() {
           element={
             loading ? (
               <div>Loading...</div>
-            ) : loginInfo ? (
+            ) : isLoggedIn ? (
               <Navigate to="/main" />
             ) : (
               <LoginPage />
@@ -59,7 +60,7 @@ export default function App() {
           element={
             loading ? (
               <div>Loading...</div>
-            ) : loginInfo ? (
+            ) : isLoggedIn ? (
               <MainPage />
             ) : (
               <Navigate to="/login" />

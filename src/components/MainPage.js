@@ -2,6 +2,8 @@ import { Layout, Menu, theme } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import commonFetch from '../comLib/CommonFetch';
+import store from '../store/store';
+import { useDispatch } from 'react-redux';
 
 const { Header, Content, Footer } = Layout;
 const headerMenu = ['회원관리', '상품관리'].map((key) => ({
@@ -10,8 +12,17 @@ const headerMenu = ['회원관리', '상품관리'].map((key) => ({
 }));
 
 const App = () => {
+  const dispatch = useDispatch();
+  dispatch({
+    type: 'LOGIN_SUCCESS',
+    data: {
+      loginId: 'dsfwes',
+      sessionId: 'awefawe',
+    },
+  });
+  console.log(store.getState());
+  console.log(store.getState());
   const navigate = useNavigate();
-  console.log('됐음');
   const Logout = async () => {
     navigate('/login');
     const parameter = { method: 'GET' };
