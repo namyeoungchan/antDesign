@@ -3,8 +3,7 @@ import { Button, Form, Input } from 'antd';
 import commonFetch from '../comLib/CommonFetch.js';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { LOGININFO_LOGIN } from '../reducers/login';
-import store from '../store';
+import store from '../store/store';
 
 function LoginPage() {
   const [mode, setMode] = useState('Login');
@@ -18,9 +17,10 @@ function LoginPage() {
       .then((result) => {
         if (result.code === '200') {
           dispatch({
-            type: 'LOGININFO_LOGIN',
+            type: 'loginSuccess',
             data: {
               loginId: values.loginId,
+              sessionId: values.sessionId,
             },
           });
           localStorage.setItem('authCookie', result.sessionId);
