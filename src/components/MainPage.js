@@ -2,6 +2,9 @@ import { Layout, Menu, theme } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import commonFetch from '../comLib/CommonFetch';
+import { useDispatch } from 'react-redux';
+import { LOGIN_INFO_CLEAR } from '../reducers/loginInfoReducer';
+import LoginPage from './LoginPage';
 
 const { Header, Content, Footer } = Layout;
 const headerMenu = ['회원관리', '상품관리'].map((key) => ({
@@ -13,27 +16,29 @@ const App = () => {
   const navigate = useNavigate();
   // const test = useSelector((state) => state.loginInfo);
   // console.log(test);
-  // const dispatch = useDispatch();
-  // dispatch(
-  //   LOGIN_SUCCESS({
-  //     loginId: 'awer',
-  //     sessionId: 'arwesraw',
-  //   }),
+  const dispatch = useDispatch();
   // );
-  // const loginInfo = useSelector((state) => state.loginInfo);
-  // console.log(loginInfo);
   const Logout = async () => {
-    navigate('/login');
-    const parameter = { method: 'GET' };
-    commonFetch(`http://localhost:8080/logout`, parameter)
-      .then((result) => {
-        navigate('/login');
-        alert('로그아웃 되었습니다..');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      // const loginInfo = useSelector((state) => state.loginInfo);
+      // console.log(loginInfo());
+      const parameter = {
+        method: 'POST',
+        body: { loginId: 'waefaw' },
+      };
+
+      const result = await commonFetch(
+        `http://localhost:8080/logout`,
+        parameter,
+      );
+      navigate(LoginPage);
+      alert('로그아웃 되었습니다..');
+      dispatch(LOGIN_INFO_CLEAR());
+    } catch (error) {
+      console.error('로그아웃 에러:', error);
+    }
   };
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();

@@ -12,16 +12,20 @@ import MainPage from './components/MainPage';
 import { useSelector } from 'react-redux';
 
 export default function App() {
+  const loginInfo = useSelector((state) => state.loginInfo.isLoggedIn);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
-  const loginInfo = useSelector((state) => state.loginInfo);
+  console.log(loginInfo);
   useEffect(() => {
+    console.log('실행됩니다');
+    setLoading(true);
     const checkSession = async () => {
       try {
         const response = await commonFetch('http://localhost:8080/chkSession', {
           method: 'GET',
         });
         if (response.status === 200) {
+          console.log('eeeeee');
           const jsonData = await response.json();
           if (jsonData.code === '01') setIsLoggedIn(true);
         } else {
@@ -31,14 +35,13 @@ export default function App() {
         console.error('Error checking session:', error);
         setIsLoggedIn(false);
       } finally {
+        console.log('afwefw');
         setLoading(false);
       }
     };
 
-    if (loading) {
-      checkSession();
-    }
-  }, [loading]);
+    checkSession();
+  }, [loginInfo]);
 
   return (
     <Router>

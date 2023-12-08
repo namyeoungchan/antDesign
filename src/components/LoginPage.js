@@ -16,19 +16,17 @@ function LoginPage() {
     commonFetch(`http://localhost:8080/${endpoint}`, parameter)
       .then((result) => {
         if (result.code === '200') {
-          console.log(values.loginId);
-          console.log(result.sessionId);
           dispatch(
             LOGIN_SUCCESS({
               loginId: values.loginId,
               sessionId: result.sessionId,
+              isLoggedIn: true,
             }),
           );
-
           localStorage.setItem('authCookie', result.sessionId);
           localStorage.setItem('SESSION_ID', result.sessionId);
-
           navigate('/main');
+
           alert('로그인되었습니다.');
         } else {
           alert(result.message);
