@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Form, Input } from 'antd';
-import commonFetch from '../comLib/CommonFetch.js';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { setUserLogin, setUserSign } from '../apis/user/userLogin-api';
 import { LOGIN_SUCCESS } from '../reducers/loginInfoReducer';
 
 function LoginPage() {
@@ -10,33 +10,31 @@ function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onFinish = async (values) => {
-    const endpoint = mode === 'Login' ? 'loginUser' : 'signIn';
-    const parameter = { method: 'POST', body: values };
+    const endpoint = mode === 'Login' ? setUserLogin : setUserSign;
 
-    commonFetch(`http://localhost:8080/${endpoint}`, parameter)
-      .then((result) => {
-        if (result.code === '200') {
-          dispatch(
-            LOGIN_SUCCESS({
-              loginId: values.loginId,
-              sessionId: result.sessionId,
-              isLoggedIn: true,
-            }),
-          );
-          localStorage.setItem('authCookie', result.sessionId);
-          localStorage.setItem('SESSION_ID', result.sessionId);
-          navigate('/main');
+    try {
+      const result = await endpoint(values);
 
-          alert('로그인되었습니다.');
-        } else {
-          alert(result.message);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      if (result.data.code === '200') {
+        dispatch(
+          LOGIN_SUCCESS({
+            loginId: values.loginId,
+            sessionId: result.data.sessionId,
+            isLoggedIn: true,
+          }),
+        );
+        localStorage.setItem('authCookie', result.data.sessionId);
+        localStorage.setItem('SESSION_ID', result.data.sessionId);
+        navigate('/main');
+
+        alert('로그인되었습니다.');
+      } else {
+        alert(result.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
-
   return (
     <div
       style={{

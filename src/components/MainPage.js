@@ -1,16 +1,41 @@
-import { Layout, Menu, theme } from 'antd';
-import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import commonFetch from '../comLib/CommonFetch';
+import { Breadcrumb, Button, Dropdown, Layout, Menu, theme } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { LOGIN_INFO_CLEAR } from '../reducers/loginInfoReducer';
 import LoginPage from './LoginPage';
+import {
+  LaptopOutlined,
+  LogoutOutlined,
+  NotificationOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+import Sider from 'antd/es/layout/Sider';
 
-const { Header, Content, Footer } = Layout;
-const headerMenu = ['회원관리', '상품관리'].map((key) => ({
+const { Header, Content } = Layout;
+
+const items1 = ['1', '2', '3'].map((key) => ({
   key,
-  label: ` ${key}`,
+  label: `nav ${key}`,
 }));
+const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
+  (icon, index) => {
+    const key = String(index + 1);
+    return {
+      key: `sub${key}`,
+      icon: React.createElement(icon),
+      label: `subnav ${key}`,
+      children: new Array(4).fill(null).map((_, j) => {
+        const subKey = index * 4 + j + 1;
+        return {
+          key: subKey,
+          label: `option${subKey}`,
+        };
+      }),
+    };
+  },
+);
 
 const App = () => {
   const navigate = useNavigate();
@@ -40,8 +65,31 @@ const App = () => {
   };
 
   const {
-    token: { colorBgContainer },
+    token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const userMenuItems = [
+    {
+      key: 'profile',
+      label: '프로필 보기',
+      // Add an onClick handler for the "프로필 보기" action if needed
+    },
+    {
+      key: 'logout',
+      label: '로그아웃',
+      onClick: Logout,
+      icon: <LogoutOutlined />,
+    },
+    // Add more user-related buttons as needed
+  ];
+  const userMenu = (
+    <Menu>
+      {userMenuItems.map((item) => (
+        <Menu.Item key={item.key} onClick={item.onClick}>
+          {item.label}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
   return (
     <Layout>
       <Header
@@ -55,36 +103,63 @@ const App = () => {
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={['2']}
-          items={headerMenu}
-        />
-      </Header>
-      <Content
-        style={{
-          padding: '0 50px',
-        }}
-      >
-        <Layout
+          items={items1}
           style={{
-            padding: '24px 0',
+            flex: 1,
+            minWidth: 0,
+          }}
+        />
+        <Dropdown overlay={userMenu} placement="bottomRight">
+          <Button type="primary" size="small">
+            <UserOutlined />
+          </Button>
+        </Dropdown>
+      </Header>
+      <Layout>
+        <Sider
+          width={200}
+          style={{
             background: colorBgContainer,
           }}
         >
+          <Menu
+            mode="inline"
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
+            style={{
+              height: '100%',
+              borderRight: 0,
+            }}
+            items={items2}
+          />
+        </Sider>
+        <Layout
+          style={{
+            padding: '0 24px 24px',
+          }}
+        >
+          <Breadcrumb
+            style={{
+              margin: '16px 0',
+            }}
+          >
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>List</Breadcrumb.Item>
+            <Breadcrumb.Item>App</Breadcrumb.Item>
+          </Breadcrumb>
           <Content
             style={{
-              padding: '0 24px',
+              padding: 24,
+              margin: 0,
               minHeight: 280,
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
             }}
-          ></Content>
-          <button onClick={Logout}>test</button>
+          >
+            Content
+          </Content>
         </Layout>
-      </Content>
-      <Footer
-        style={{
-          textAlign: 'center',
-        }}
-      >
-        Ant Design ©2023 Created by Ant UED
-      </Footer>
+      </Layout>
     </Layout>
   );
 };

@@ -6,42 +6,50 @@ import {
   Routes,
 } from 'react-router-dom';
 import './App.css';
-import commonFetch from './comLib/CommonFetch.js';
 import LoginPage from './components/LoginPage.js';
 import MainPage from './components/MainPage';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { chkUserSession } from './apis/user/userLogin-api';
+import { LOGIN_SUCCESS } from './reducers/loginInfoReducer';
 
 export default function App() {
-  const loginInfo = useSelector((state) => state.loginInfo.isLoggedIn);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.loginInfo.isLoggedIn);
   const [loading, setLoading] = useState(true);
-  console.log(loginInfo);
   useEffect(() => {
-    console.log('실행됩니다');
+    console.log(isLoggedIn);
     setLoading(true);
-    const checkSession = async () => {
-      try {
-        const response = await commonFetch('http://localhost:8080/chkSession', {
-          method: 'GET',
-        });
-        if (response.status === 200) {
-          console.log('eeeeee');
-          const jsonData = await response.json();
-          if (jsonData.code === '01') setIsLoggedIn(true);
+    chkUserSession()
+      .then((result) => {
+        if (result.data.status === 200) {
+          const jsonData = result.data.json();
+          if (jsonData.code === '01') {
+            dispatch(
+              LOGIN_SUCCESS({
+                isLoggedIn: true,
+              }),
+            );
+          }
         } else {
-          setIsLoggedIn(false);
+          dispatch(
+            LOGIN_SUCCESS({
+              isLoggedIn: false,
+            }),
+          );
         }
-      } catch (error) {
-        console.error('Error checking session:', error);
-        setIsLoggedIn(false);
-      } finally {
-        console.log('afwefw');
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    };
-
-    checkSession();
-  }, [loginInfo]);
+      })
+      .catch((error) => {
+        console.error('세션 확인 중 오류 발생:', error);
+        dispatch(
+          LOGIN_SUCCESS({
+            isLoggedIn: false,
+          }),
+        );
+      });
+  }, [isLoggedIn]);
 
   return (
     <Router>
