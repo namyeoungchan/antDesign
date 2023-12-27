@@ -1,3 +1,4 @@
+// reducers/loginInfoReducer.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -24,6 +25,5 @@ const loginInfo = createSlice({
   },
 });
 
-export const { LOGIN_SUCCESS } = loginInfo.actions;
-export const { LOGIN_INFO_CLEAR } = loginInfo.actions;
-export const loginInfoReducer = loginInfo.reducer; // 수정된 부분
+export const { LOGIN_SUCCESS, LOGIN_INFO_CLEAR } = loginInfo.actions; // 수정된 부분
+export const loginInfoReducer = loginInfo.reducer;

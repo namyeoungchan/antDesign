@@ -1,10 +1,8 @@
 import React from 'react';
-import commonFetch from '../comLib/CommonFetch';
 import { Breadcrumb, Button, Dropdown, Layout, Menu, theme } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LOGIN_INFO_CLEAR } from '../reducers/loginInfoReducer';
-import LoginPage from './LoginPage';
 import {
   LaptopOutlined,
   LogoutOutlined,
@@ -12,6 +10,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import Sider from 'antd/es/layout/Sider';
+import { setUserLogOut } from '../apis/user/userLogin-api';
 
 const { Header, Content } = Layout;
 
@@ -39,26 +38,16 @@ const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
 
 const App = () => {
   const navigate = useNavigate();
-  // const test = useSelector((state) => state.loginInfo);
-  // console.log(test);
+  const { sessionId } = useSelector((state) => state.loginInfo);
   const dispatch = useDispatch();
   // );
   const Logout = async () => {
     try {
-      // const loginInfo = useSelector((state) => state.loginInfo);
-      // console.log(loginInfo());
-      const parameter = {
-        method: 'POST',
-        body: { loginId: 'waefaw' },
-      };
-
-      const result = await commonFetch(
-        `http://localhost:8080/logout`,
-        parameter,
-      );
-      navigate(LoginPage);
-      alert('로그아웃 되었습니다..');
-      dispatch(LOGIN_INFO_CLEAR());
+      setUserLogOut(sessionId).then((result) => {
+        navigate('login');
+        dispatch(LOGIN_INFO_CLEAR());
+        alert('로그아웃 되었습니다.');
+      });
     } catch (error) {
       console.error('로그아웃 에러:', error);
     }

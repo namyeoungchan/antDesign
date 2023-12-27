@@ -1,8 +1,9 @@
+// store.js
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from '../reducers';
 
 const store = configureStore({
-  reducer: rootReducer, // 수정된 부분
+  reducer: rootReducer,
 });
 
-export default store;
+export { store }; // 수정된 부분

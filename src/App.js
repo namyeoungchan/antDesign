@@ -18,7 +18,6 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    console.log(sessionId);
     chkUserSession(sessionId)
       .then((result) => {
         if (result.status === 200) {
