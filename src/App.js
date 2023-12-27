@@ -14,19 +14,19 @@ import { LOGIN_SUCCESS } from './reducers/loginInfoReducer';
 
 export default function App() {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.loginInfo.isLoggedIn);
+  const { isLoggedIn, sessionId } = useSelector((state) => state.loginInfo);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    console.log(isLoggedIn);
     setLoading(true);
-    chkUserSession()
+    console.log(sessionId);
+    chkUserSession(sessionId)
       .then((result) => {
-        if (result.data.status === 200) {
-          const jsonData = result.data.json();
-          if (jsonData.code === '01') {
+        if (result.status === 200) {
+          if (result.data.code === '01') {
             dispatch(
               LOGIN_SUCCESS({
                 isLoggedIn: true,
+                sessionId: sessionId,
               }),
             );
           }
