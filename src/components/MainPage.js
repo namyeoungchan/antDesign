@@ -14,9 +14,9 @@ import { setUserLogOut } from '../apis/user/userLogin-api';
 
 const { Header, Content } = Layout;
 
-const items1 = ['1', '2', '3'].map((key) => ({
+const items1 = ['공지사항', '유저 관리', '매장 관리'].map((key) => ({
   key,
-  label: `nav ${key}`,
+  label: key,
 }));
 const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
   (icon, index) => {
@@ -43,6 +43,7 @@ const App = () => {
   // );
   const Logout = async () => {
     try {
+      console.log(sessionId);
       setUserLogOut(sessionId).then((result) => {
         navigate('login');
         dispatch(LOGIN_INFO_CLEAR());
