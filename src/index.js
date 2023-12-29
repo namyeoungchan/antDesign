@@ -6,10 +6,32 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { NotFound } from './views/NotFound';
+import LoginPage from './components/LoginPage';
+import MainPage from './components/MainPage';
+import { createBrowserRouter } from 'react-router-dom';
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <NotFound />,
+    children: [
+      { index: true, path: '/', element: <LoginPage /> }, //index로 '/' 메인페이지 지정
+      { path: '/main', element: <MainPage /> },
+      { path: '/main/board', element: <MainPage /> },
+      { path: '/main/store-management', element: <MainPage /> },
+      { path: '/main/user-management', element: <MainPage /> },
+      {
+        path: '/login',
+        element: <LoginPage />,
+      },
+    ],
+  },
+]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
+  <Provider store={store} router={router}>
     <App />
   </Provider>,
 );

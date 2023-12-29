@@ -5,6 +5,7 @@ import {
   NotificationOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import React from 'react';
 
 export const mainHeaderMenu = [
   {
@@ -13,7 +14,7 @@ export const mainHeaderMenu = [
     sideList: [
       {
         key: `mainBoard`,
-        icon: UserOutlined,
+        icon: <UserOutlined />,
         label: `매장공지`,
         children: [
           {
@@ -35,7 +36,7 @@ export const mainHeaderMenu = [
     sideList: [
       {
         key: `mainBoard`,
-        icon: LaptopOutlined,
+        icon: <LaptopOutlined />,
         label: `매장공지`,
         children: [
           {
@@ -57,7 +58,7 @@ export const mainHeaderMenu = [
     sideList: [
       {
         key: `mainBoard`,
-        icon: NotificationOutlined,
+        icon: <NotificationOutlined />,
         label: `매장공지`,
         children: [
           {
