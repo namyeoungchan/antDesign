@@ -4,8 +4,10 @@ import React from 'react';
 import { mainHeaderMenu } from '../variables/contents/side-menu-info';
 import { HEADER_MENU } from '../variables/enums/content-enum';
 import { menuUrlNav } from '../variables/contents/menu-url-nav';
+import { useNavigate } from 'react-router-dom';
 
 export const MainSider = () => {
+  const navigate = useNavigate();
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -28,7 +30,7 @@ export const MainSider = () => {
           borderRight: 0,
         }}
         onClick={(item) => {
-          console.log(menuUrlNav[item.key]);
+          navigate(menuUrlNav[item.key]);
         }}
         items={selectSideMenu}
       />

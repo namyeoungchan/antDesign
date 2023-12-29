@@ -17,11 +17,14 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <NotFound />,
     children: [
-      { index: true, path: '/', element: <LoginPage /> }, //index로 '/' 메인페이지 지정
+      { index: true, path: '/', element: <LoginPage /> },
       { path: '/main', element: <MainPage /> },
-      { path: '/main/board', element: <MainPage /> },
-      { path: '/main/store-management', element: <MainPage /> },
-      { path: '/main/user-management', element: <MainPage /> },
+      { path: '/board/notice', element: <MainPage /> },
+      { path: '/board/lunch-menu', element: <MainPage /> },
+      { path: '/store-management/admin', element: <MainPage /> },
+      { path: '/store-management/user', element: <MainPage /> },
+      { path: '/user-management/admin', element: <MainPage /> },
+      { path: '/user-management/user', element: <MainPage /> },
       {
         path: '/login',
         element: <LoginPage />,
