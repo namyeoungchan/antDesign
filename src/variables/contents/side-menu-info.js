@@ -20,15 +20,17 @@ export const mainHeaderMenu = [
           {
             key: 'storeBoard',
             label: `공지사항`,
+            url: '/board/notice',
           },
           {
             key: 'launchBoard',
             label: `식단공지(점심)`,
+            url: '/board/lunch-menu',
           },
         ],
       },
     ],
-    list: '각 메뉴 리스트 url',
+    url: '/board/notice',
   },
   {
     key: HEADER_MENU.STORE_MANAGEMENT,
@@ -40,17 +42,19 @@ export const mainHeaderMenu = [
         label: `매장공지`,
         children: [
           {
-            key: 'storeBoard',
-            label: `공지사항`,
+            key: 'managementAdminBoard',
+            label: `관리자 공지사항`,
+            url: '/store-management/admin',
           },
           {
-            key: 'launchBoard',
-            label: `식단공지(점심)`,
+            key: 'managementUserBoard',
+            label: `유저 공지사항`,
+            url: '/store-management/user',
           },
         ],
       },
     ],
-    list: '각 메뉴 리스트 url',
+    url: '/board/notice',
   },
   {
     key: HEADER_MENU.USER_MANAGEMENT,
@@ -62,16 +66,18 @@ export const mainHeaderMenu = [
         label: `매장공지`,
         children: [
           {
-            key: 'storeBoard',
-            label: `공지사항`,
+            key: 'storeManagementAdmin',
+            label: `관리자 공지사항`,
+            url: '/user-management/admin',
           },
           {
-            key: 'launchBoard',
-            label: `식단공지(점심)`,
+            key: 'storeManagementUser',
+            label: `유저 공지사항`,
+            url: '/user-management/user',
           },
         ],
       },
     ],
-    list: '각 메뉴 리스트 url',
+    url: '/board/notice',
   },
 ];
