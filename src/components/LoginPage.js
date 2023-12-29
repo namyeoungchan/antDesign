@@ -16,7 +16,6 @@ function LoginPage() {
       const result = await endpoint(values);
 
       if (result.data.code === '200') {
-        console.log(result.data.sessionId);
         dispatch(
           LOGIN_SUCCESS({
             loginId: values.loginId,
