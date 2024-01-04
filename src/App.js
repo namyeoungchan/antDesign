@@ -11,6 +11,7 @@ import MainPage from './components/MainPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { chkUserSession } from './apis/user/userLogin-api';
 import { LOGIN_SUCCESS } from './reducers/loginInfoReducer';
+import { PopupWrap } from './components/popup/PopupWrap';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -51,35 +52,38 @@ export default function App() {
   }, [isLoggedIn]);
 
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            loading ? (
-              <div>Loading...</div>
-            ) : isLoggedIn ? (
-              <Navigate to="/main" />
-            ) : (
-              <LoginPage />
-            )
-          }
-        />
-        <Route
-          path="/main"
-          element={
-            loading ? (
-              <div>Loading...</div>
-            ) : isLoggedIn ? (
-              <MainPage />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
+    <>
+      <Router>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              loading ? (
+                <div>Loading...</div>
+              ) : isLoggedIn ? (
+                <Navigate to="/main" />
+              ) : (
+                <LoginPage />
+              )
+            }
+          />
+          <Route
+            path="/main"
+            element={
+              loading ? (
+                <div>Loading...</div>
+              ) : isLoggedIn ? (
+                <MainPage />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
 
-        <Route path="*" element={<MainPage />} />
-      </Routes>
-    </Router>
+          <Route path="*" element={<MainPage />} />
+        </Routes>
+      </Router>
+      <PopupWrap />
+    </>
   );
 }
